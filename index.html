@@ -35,14 +35,12 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            animation: bounce 5s infinite ease-in-out;
+            transform: translate(-50%, -50%) scale(0);
+            animation: scaleHeart 5s infinite alternate ease-in-out;
         }
-        @keyframes bounce {
-            0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
-            25% { transform: translate(-50%, -50%) translate(calc(100vw - 100px), 0); }
-            50% { transform: translate(-50%, -50%) translate(calc(100vw - 100px), calc(100vh - 100px)); }
-            75% { transform: translate(-50%, -50%) translate(0, calc(100vh - 100px)); }
+        @keyframes scaleHeart {
+            0%, 100% { transform: translate(-50%, -50%) scale(0); }
+            50% { transform: translate(-50%, -50%) scale(1); }
         }
     </style>
 </head>
