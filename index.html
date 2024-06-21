@@ -14,7 +14,7 @@
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
-            overflow: hidden; 
+            overflow: hidden;
         }
         .container {
             text-align: center;
@@ -24,26 +24,26 @@
             max-height: 100%;
         }
         .container p {
-            color: #ff69b4; 
+            color: #ff69b4;
             margin: 0;
-            padding-top: 10px; 
+            padding-top: 10px;
         }
         .heart {
             width: 50px;
             height: 50px;
-            background-color: #ff69b4; 
+            background-color: #ff69b4;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            clip-path: polygon(50% 0%, 61% 14%, 75% 20%, 86% 36%, 100% 36%, 80% 58%, 82% 84%, 50% 100%, 18% 84%, 20% 58%, 0% 36%, 14% 36%, 25% 20%, 39% 14%);
+            clip-path: path("M10,30 A20,20 0 0,1 50,30 A20,20 0 0,1 90,30 Q90,60 50,90 Q10,60 10,30 Z");
             animation: bounce 5s infinite ease-in-out;
         }
         @keyframes bounce {
             0% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-            25% { transform: translate(-50%, -50%) translateX(calc(100vw - 50px)); }
-            50% { transform: translate(-50%, -50%) translateX(calc(100vw - 50px)) translateY(calc(100vh - 50px)); }
-            75% { transform: translate(-50%, -50%) translateY(calc(100vh - 50px)); }
+            25% { transform: translate(-50%, -50%) translateX(calc(100vw - 100px)); }
+            50% { transform: translate(-50%, -50%) translateX(calc(100vw - 100px)) translateY(calc(100vh - 100px)); }
+            75% { transform: translate(-50%, -50%) translateY(calc(100vh - 100px)); }
             100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
         }
     </style>
