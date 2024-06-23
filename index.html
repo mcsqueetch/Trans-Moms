@@ -162,6 +162,10 @@
 
         // Drag and Drop Functionality
         botContainer.onmousedown = function(event) {
+            if (event.target.closest('.chat-input') || event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON') {
+                return;
+            }
+
             let shiftX = event.clientX - botContainer.getBoundingClientRect().left;
             let shiftY = event.clientY - botContainer.getBoundingClientRect().top;
 
