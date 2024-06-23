@@ -101,6 +101,23 @@
             cursor: pointer;
             border-bottom-right-radius: 10px;
         }
+        .bot-container {
+            position: absolute;
+            bottom: 100px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        .bot-message {
+            background: #444;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            max-width: 200px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -123,9 +140,15 @@
         </div>
     </div>
 
+    <div class="bot-container">
+        <img src="/mnt/data/Creepy Robot.png" alt="Chatbot Image" style="width: 200px;">
+        <div class="bot-message" id="botMessage" style="display: none;"></div>
+    </div>
+
     <script>
         const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');
+        const botMessage = document.getElementById('botMessage');
 
         function addMessage(sender, message) {
             const messageElement = document.createElement('div');
@@ -151,7 +174,12 @@
             } else {
                 response = 'I am sorry, I did not understand that.';
             }
-            setTimeout(() => addMessage('Bot', response), 1000);
+            setTimeout(() => showBotMessage(response), 1000);
+        }
+
+        function showBotMessage(message) {
+            botMessage.textContent = message;
+            botMessage.style.display = 'block';
         }
 
         userInput.addEventListener('keydown', function(event) {
