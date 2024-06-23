@@ -58,11 +58,54 @@
             0%, 100% { transform: translate(-50%, -50%) scale(0); }
             50% { transform: translate(-50%, -50%) scale(1); }
         }
+        .chat-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background: #444;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .chat-messages {
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #555;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-bottom-left-radius: 10px;
+        }
+        .chat-input button {
+            padding: 10px;
+            background: #ff69b4;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom-right-radius: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="stuart.jpg" alt="Landing Page Image">
+        <img src="stuart.jpg" alt="A handsome person named Stuart">
         <p><a href="https://www.ljsilvers.com" class="rainbow-text" target="_blank">MR. HANDSOME</a></p>
         <div class="heart">
             <svg viewBox="0 0 24 24" fill="#ff69b4" xmlns="http://www.w3.org/2000/svg">
@@ -70,5 +113,46 @@
             </svg>
         </div>
     </div>
+
+    <div class="chat-container">
+        <div class="chat-header">Chat with Us</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+
+        function addMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = userInput.value;
+            if (message.trim() === '') return;
+            addMessage('You', message);
+            userInput.value = '';
+            getBotResponse(message);
+        }
+
+        function getBotResponse(message) {
+            let response = '';
+            if (message.toLowerCase().includes('hello')) {
+                response = 'Hello! How can I help you today?';
+            } else if (message.toLowerCase().includes('how are you')) {
+                response = 'I am just a bot, but I am here to help you!';
+            } else {
+                response = 'I am sorry, I did not understand that.';
+            }
+            setTimeout(() => addMessage('Bot', response), 1000);
+        }
+    </script>
 </body>
 </html>
