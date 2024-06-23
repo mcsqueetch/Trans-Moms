@@ -137,7 +137,49 @@
     </div>
 
     <script>
-        const botContainer = document.getElementById('botContainer');
+        const botMessage = document.getElementById('botMessage');
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim().toLowerCase();
+            if (message === '') return;
+
+            userInput.value = '';
+            getBotResponse(message);
+        }
+
+        function getBotResponse(message) {
+            let response = '';
+            if (message.endsWith('?')) {
+                response = getRandomEdgingResponse();
+            } else {
+                response = 'I am sorry, I did not understand that.';
+            }
+
+            showBotMessage(response);
+        }
+
+        function showBotMessage(message) {
+            botMessage.textContent = message;
+            botMessage.style.display = 'block';
+        }
+
+        function getRandomEdgingResponse() {
+            const responses = [
+                "Let me finish edging first.",
+                "Stop asking me questions, I'm edging.",
+                "Please wait a second while I finish edging."
+            ];
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            return responses[randomIndex];
+        }
+
+        const userInput = document.getElementById('userInput');
+        userInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
 
         function startDrag(event) {
             event.preventDefault(); // Prevent default behavior of the button
@@ -167,43 +209,10 @@
             };
         }
 
+        const botContainer = document.getElementById('botContainer');
         botContainer.ondragstart = function() {
             return false;
         };
-
-        // Functions for sending message (existing functionality)
-        function sendMessage() {
-            const userInput = document.getElementById('userInput');
-            const message = userInput.value;
-            if (message.trim() === '') return;
-            userInput.value = '';
-            getBotResponse(message);
-        }
-
-        function getBotResponse(message) {
-            let response = '';
-            if (message.toLowerCase().includes('hello')) {
-                response = 'Hello! How can I help you today?';
-            } else if (message.toLowerCase().includes('how are you')) {
-                response = 'I am just a bot, but I am here to help you!';
-            } else {
-                response = 'I am sorry, I did not understand that.';
-            }
-            setTimeout(() => showBotMessage(response), 1000);
-        }
-
-        function showBotMessage(message) {
-            const botMessage = document.getElementById('botMessage');
-            botMessage.textContent = message;
-            botMessage.style.display = 'block';
-        }
-
-        const userInput = document.getElementById('userInput');
-        userInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        });
     </script>
 </body>
 </html>
