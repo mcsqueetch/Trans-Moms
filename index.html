@@ -69,7 +69,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             padding: 10px;
-            cursor: move;
+            cursor: grab;
         }
         .bot-message {
             background: #444;
@@ -116,7 +116,7 @@
     </div>
 
     <div class="bot-container" id="botContainer">
-        <img src="robot.png" alt="Chatbot Image" style="width: 200px;">
+        <img src="/mnt/data/Creepy Robot.png" alt="Chatbot Image" style="width: 200px;">
         <div class="bot-message" id="botMessage" style="display: none;"></div>
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="Type a message..." />
@@ -168,6 +168,8 @@
                 botContainer.style.left = pageX - shiftX + 'px';
                 botContainer.style.top = pageY - shiftY + 'px';
             }
+
+            moveAt(event.pageX, event.pageY);
 
             function onMouseMove(event) {
                 moveAt(event.pageX, event.pageY);
