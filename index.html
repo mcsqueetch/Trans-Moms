@@ -69,6 +69,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             padding: 10px;
+            cursor: move;
         }
         .bot-message {
             background: #444;
@@ -114,8 +115,8 @@
         </div>
     </div>
 
-    <div class="bot-container">
-        <img src="robot.png" alt="Chatbot Image" style="width: 200px;">
+    <div class="bot-container" id="botContainer">
+        <img src="/mnt/data/Creepy Robot.png" alt="Chatbot Image" style="width: 200px;">
         <div class="bot-message" id="botMessage" style="display: none;"></div>
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="Type a message..." />
@@ -126,6 +127,7 @@
     <script>
         const userInput = document.getElementById('userInput');
         const botMessage = document.getElementById('botMessage');
+        const botContainer = document.getElementById('botContainer');
 
         function sendMessage() {
             const message = userInput.value;
@@ -156,6 +158,32 @@
                 sendMessage();
             }
         });
+
+        // Drag and Drop Functionality
+        botContainer.onmousedown = function(event) {
+            let shiftX = event.clientX - botContainer.getBoundingClientRect().left;
+            let shiftY = event.clientY - botContainer.getBoundingClientRect().top;
+
+            function moveAt(pageX, pageY) {
+                botContainer.style.left = pageX - shiftX + 'px';
+                botContainer.style.top = pageY - shiftY + 'px';
+            }
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+
+            botContainer.onmouseup = function() {
+                document.removeEventListener('mousemove', onMouseMove);
+                botContainer.onmouseup = null;
+            };
+        };
+
+        botContainer.ondragstart = function() {
+            return false;
+        };
     </script>
 </body>
 </html>
