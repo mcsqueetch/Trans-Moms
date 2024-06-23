@@ -140,6 +140,7 @@
         const botContainer = document.getElementById('botContainer');
 
         function startDrag(event) {
+            event.preventDefault(); // Prevent default behavior of the button
             let shiftX = event.clientX - botContainer.getBoundingClientRect().left;
             let shiftY = event.clientY - botContainer.getBoundingClientRect().top;
 
@@ -186,7 +187,7 @@
             } else if (message.toLowerCase().includes('how are you')) {
                 response = 'I am just a bot, but I am here to help you!';
             } else {
-                response = 'Sorry, I'm not done edging yet, ask again later';
+                response = 'I am sorry, I did not understand that.';
             }
             setTimeout(() => showBotMessage(response), 1000);
         }
