@@ -103,6 +103,16 @@
             border-bottom-right-radius: 10px;
             border-top-right-radius: 10px;
         }
+        .drag-handle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: move;
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            border-top-left-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +127,7 @@
     </div>
 
     <div class="bot-container" id="botContainer">
+        <button class="drag-handle" onmousedown="startDrag(event)">Drag</button>
         <img src="robot.png" alt="Chatbot Image" style="width: 200px;">
         <div class="bot-message" id="botMessage" style="display: none;"></div>
         <div class="chat-input">
@@ -126,46 +137,9 @@
     </div>
 
     <script>
-        const userInput = document.getElementById('userInput');
-        const botMessage = document.getElementById('botMessage');
         const botContainer = document.getElementById('botContainer');
 
-        function sendMessage() {
-            const message = userInput.value;
-            if (message.trim() === '') return;
-            userInput.value = '';
-            getBotResponse(message);
-        }
-
-        function getBotResponse(message) {
-            let response = '';
-            if (message.toLowerCase().includes('hello')) {
-                response = 'Hello! How can I help you today?';
-            } else if (message.toLowerCase().includes('how are you')) {
-                response = 'I am just a bot, but I am here to help you!';
-            } else {
-                response = 'I am sorry, I did not understand that.';
-            }
-            setTimeout(() => showBotMessage(response), 1000);
-        }
-
-        function showBotMessage(message) {
-            botMessage.textContent = message;
-            botMessage.style.display = 'block';
-        }
-
-        userInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        // Drag and Drop Functionality
-        botContainer.onmousedown = function(event) {
-            if (event.target.closest('.chat-input') || event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON') {
-                return;
-            }
-
+        function startDrag(event) {
             let shiftX = event.clientX - botContainer.getBoundingClientRect().left;
             let shiftY = event.clientY - botContainer.getBoundingClientRect().top;
 
@@ -190,11 +164,45 @@
                 document.removeEventListener('mousemove', onMouseMove);
                 botContainer.onmouseup = null;
             };
-        };
+        }
 
         botContainer.ondragstart = function() {
             return false;
         };
+
+        // Functions for sending message (existing functionality)
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value;
+            if (message.trim() === '') return;
+            userInput.value = '';
+            getBotResponse(message);
+        }
+
+        function getBotResponse(message) {
+            let response = '';
+            if (message.toLowerCase().includes('hello')) {
+                response = 'Hello! How can I help you today?';
+            } else if (message.toLowerCase().includes('how are you')) {
+                response = 'I am just a bot, but I am here to help you!';
+            } else {
+                response = 'I am sorry, I did not understand that.';
+            }
+            setTimeout(() => showBotMessage(response), 1000);
+        }
+
+        function showBotMessage(message) {
+            const botMessage = document.getElementById('botMessage');
+            botMessage.textContent = message;
+            botMessage.style.display = 'block';
+        }
+
+        const userInput = document.getElementById('userInput');
+        userInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>
