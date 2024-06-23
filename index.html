@@ -60,8 +60,9 @@
         }
         .bot-container {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -163,6 +164,10 @@
         botContainer.onmousedown = function(event) {
             let shiftX = event.clientX - botContainer.getBoundingClientRect().left;
             let shiftY = event.clientY - botContainer.getBoundingClientRect().top;
+
+            botContainer.style.position = 'absolute';
+            botContainer.style.zIndex = 1000;
+            document.body.append(botContainer);
 
             function moveAt(pageX, pageY) {
                 botContainer.style.left = pageX - shiftX + 'px';
