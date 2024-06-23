@@ -58,33 +58,31 @@
             0%, 100% { transform: translate(-50%, -50%) scale(0); }
             50% { transform: translate(-50%, -50%) scale(1); }
         }
-        .chat-container {
+        .bot-container {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            width: 300px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
             background: #333;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
+            padding: 10px;
         }
-        .chat-header {
+        .bot-message {
             background: #444;
+            color: #fff;
             padding: 10px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            max-width: 200px;
             text-align: center;
-            font-weight: bold;
-        }
-        .chat-messages {
-            padding: 10px;
-            height: 200px;
-            overflow-y: auto;
         }
         .chat-input {
             display: flex;
             border-top: 1px solid #555;
+            width: 100%;
         }
         .chat-input input {
             flex: 1;
@@ -101,23 +99,6 @@
             cursor: pointer;
             border-bottom-right-radius: 10px;
         }
-        .bot-container {
-            position: absolute;
-            bottom: 100px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-        }
-        .bot-message {
-            background: #444;
-            color: #fff;
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 10px;
-            max-width: 200px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -131,31 +112,18 @@
         </div>
     </div>
 
-    <div class="chat-container">
-        <div class="chat-header">Chat with Us</div>
-        <div class="chat-messages" id="chatMessages"></div>
+    <div class="bot-container">
+        <img src="/mnt/data/robot.png" alt="Chatbot Image" style="width: 200px;">
+        <div class="bot-message" id="botMessage" style="display: none;"></div>
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="Type a message..." />
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
 
-    <div class="bot-container">
-        <img src="/mnt/data/robot.png" alt="Chatbot Image" style="width: 200px;">
-        <div class="bot-message" id="botMessage" style="display: none;"></div>
-    </div>
-
     <script>
-        const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');
         const botMessage = document.getElementById('botMessage');
-
-        function addMessage(sender, message) {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = `${sender}: ${message}`;
-            chatMessages.appendChild(messageElement);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
 
         function sendMessage() {
             const message = userInput.value;
