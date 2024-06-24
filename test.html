@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moving Red Square</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden; /* Hide scroll bars */
+    }
+    .red-square {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+</head>
+<body>
+    <div class="red-square" id="movingSquare"></div>
+
+    <script>
+        function getRandomPosition() {
+            var x = Math.floor(Math.random() * window.innerWidth);
+            var y = Math.floor(Math.random() * window.innerHeight);
+            return [x, y];
+        }
+
+        function moveSquare() {
+            var square = document.getElementById('movingSquare');
+            var newPosition = getRandomPosition();
+            square.style.left = newPosition[0] + 'px';
+            square.style.top = newPosition[1] + 'px';
+        }
+
+        setInterval(moveSquare, 2000); // Move square every 2 seconds
+    </script>
+</body>
+</html>
