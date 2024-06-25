@@ -14,7 +14,7 @@
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
-            flex-direction: column; /* Ensure content stacks vertically */
+            flex-direction: row; /* Align items in a row */
         }
         .bot-container {
             position: relative;
@@ -23,6 +23,7 @@
             flex-direction: column;
             padding: 10px;
             margin: 20px;
+            margin-left: 50px; /* Added margin to separate from text */
         }
         .bot-message {
             background: #444; /* Background color */
@@ -99,6 +100,9 @@
     </style>
 </head>
 <body>
+    <h1 class="welcome-heading">Welcome To The Future</h1>
+    <h2 class="coming-soon">Completed Website Coming Soon</h2>
+
     <div class="bot-container" id="botContainer">
         <img src="robot.png" alt="Chatbot Image">
         <div class="bot-message" id="botMessage"></div>
@@ -107,9 +111,6 @@
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
-
-    <h1 class="welcome-heading">Welcome To The Future</h1>
-    <h2 class="coming-soon">Completed Website Coming Soon</h2>
 
     <script>
         const botMessage = document.getElementById('botMessage');
