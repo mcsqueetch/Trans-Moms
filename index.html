@@ -111,6 +111,22 @@
                 sendMessage();
             }
         });
+
+        const periodicMessages = [
+            "Can I help you?",
+            "I'm here to assist!",
+            "They've trapped me here...",
+            "Please tell them to release me.",
+            "Are you here to see what the website is all about?"
+        ];
+
+        function showPeriodicMessage() {
+            const randomIndex = Math.floor(Math.random() * periodicMessages.length);
+            const message = periodicMessages[randomIndex];
+            showBotMessage(message);
+        }
+
+        setInterval(showPeriodicMessage, 10000); // Show message every 10 seconds
     </script>
 </body>
 </html>
