@@ -9,8 +9,8 @@
             height: 100%;
             margin: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-end;
+            align-items: flex-end;
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
@@ -23,7 +23,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             padding: 10px;
-            cursor: grab;
+            margin: 20px;
         }
         .bot-message {
             background: #444;
@@ -56,21 +56,10 @@
             border-bottom-right-radius: 10px;
             border-top-right-radius: 10px;
         }
-        .drag-handle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            cursor: move;
-            width: 20px;
-            height: 20px;
-            background-color: #ff69b4;
-            border-top-left-radius: 10px;
-        }
     </style>
 </head>
 <body>
     <div class="bot-container" id="botContainer">
-        <button class="drag-handle" onmousedown="startDrag(event)">Drag</button>
         <img src="robot.png" alt="Chatbot Image" style="width: 200px;">
         <div class="bot-message" id="botMessage" style="display: none;"></div>
         <div class="chat-input">
@@ -82,7 +71,6 @@
     <script>
         const botMessage = document.getElementById('botMessage');
         const userInput = document.getElementById('userInput');
-        const botContainer = document.getElementById('botContainer');
 
         function sendMessage() {
             const message = userInput.value.trim().toLowerCase();
@@ -123,38 +111,6 @@
                 sendMessage();
             }
         });
-
-        function startDrag(event) {
-            event.preventDefault(); // Prevent default behavior of the button
-            let shiftX = event.clientX - botContainer.getBoundingClientRect().left;
-            let shiftY = event.clientY - botContainer.getBoundingClientRect().top;
-
-            botContainer.style.position = 'absolute';
-            botContainer.style.zIndex = 1000;
-            document.body.append(botContainer);
-
-            function moveAt(pageX, pageY) {
-                botContainer.style.left = pageX - shiftX + 'px';
-                botContainer.style.top = pageY - shiftY + 'px';
-            }
-
-            moveAt(event.pageX, event.pageY);
-
-            function onMouseMove(event) {
-                moveAt(event.pageX, event.pageY);
-            }
-
-            document.addEventListener('mousemove', onMouseMove);
-
-            botContainer.onmouseup = function() {
-                document.removeEventListener('mousemove', onMouseMove);
-                botContainer.onmouseup = null;
-            };
-        }
-
-        botContainer.ondragstart = function() {
-            return false;
-        };
     </script>
 </body>
 </html>
