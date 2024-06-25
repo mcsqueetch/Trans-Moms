@@ -9,20 +9,16 @@
             height: 100%;
             margin: 0;
             display: flex;
-            justify-content: flex-end; /* Align content to the right */
-            align-items: flex-end; /* Align content to the bottom */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
-            overflow: hidden; /* Hide overflow to prevent horizontal scrolling */
+            flex-direction: column; /* Align items in a column */
         }
         .text-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end; /* Align text to the right */
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            text-align: center; /* Center align text */
+            margin-top: 50px; /* Adjust spacing from the top */
         }
         .bot-container {
             position: relative;
