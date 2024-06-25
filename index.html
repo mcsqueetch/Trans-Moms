@@ -14,16 +14,20 @@
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
-            flex-direction: row; /* Align items in a row */
+            flex-direction: column; /* Align items in a column */
+        }
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px; /* Adjust spacing from the top */
         }
         .bot-container {
-            position: relative;
             display: flex;
-            align-items: center;
             flex-direction: column;
+            align-items: center;
             padding: 10px;
             margin: 20px;
-            margin-left: 50px; /* Added margin to separate from text */
         }
         .bot-message {
             background: #444; /* Background color */
@@ -87,7 +91,7 @@
             font-size: 6em; /* Larger size */
             text-align: center;
             color: #fff;
-            margin-top: 20px; /* Adjust spacing from the top */
+            margin-bottom: 20px; /* Adjust spacing from the bottom */
         }
 
         .coming-soon {
@@ -95,13 +99,15 @@
             font-size: 2em; /* Smaller size */
             text-align: center;
             color: #fff;
-            margin-top: 1px; /* Adjust spacing from the top */
+            margin-top: 10px; /* Adjust spacing from the top */
         }
     </style>
 </head>
 <body>
-    <h1 class="welcome-heading">Welcome To The Future</h1>
-    <h2 class="coming-soon">Completed Website Coming Soon</h2>
+    <div class="text-container">
+        <h1 class="welcome-heading">Welcome To The Future</h1>
+        <h2 class="coming-soon">Completed Website Coming Soon</h2>
+    </div>
 
     <div class="bot-container" id="botContainer">
         <img src="robot.png" alt="Chatbot Image">
