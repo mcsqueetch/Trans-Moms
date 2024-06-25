@@ -16,6 +16,7 @@
             font-family: Arial, sans-serif;
         }
         .bot-container {
+            position: relative;
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -30,9 +31,14 @@
             color: #fff;
             padding: 10px;
             border-radius: 10px;
-            margin-top: 10px;
             max-width: 200px;
             text-align: center;
+            position: absolute;
+            top: 10px; /* Adjust as needed to position near the robot's mouth */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            z-index: 1;
         }
         .chat-input {
             display: flex;
@@ -56,12 +62,15 @@
             border-bottom-right-radius: 10px;
             border-top-right-radius: 10px;
         }
+        .bot-container img {
+            width: 200px;
+        }
     </style>
 </head>
 <body>
     <div class="bot-container" id="botContainer">
-        <img src="robot.png" alt="Chatbot Image" style="width: 200px;">
-        <div class="bot-message" id="botMessage" style="display: none;"></div>
+        <img src="robot.png" alt="Chatbot Image">
+        <div class="bot-message" id="botMessage"></div>
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="Type a message..." />
             <button onclick="sendMessage()">Send</button>
@@ -117,7 +126,7 @@
             "I'm here to assist!",
             "They've trapped me here...",
             "Please tell them to release me.",
-            "Why not make a profile?"
+            "Are you here to see what the website is all about?"
         ];
 
         function showPeriodicMessage() {
