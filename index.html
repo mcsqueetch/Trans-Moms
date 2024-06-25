@@ -14,6 +14,7 @@
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
+            flex-direction: column; /* Ensure content stacks vertically */
         }
         .bot-container {
             position: relative;
@@ -98,9 +99,6 @@
     </style>
 </head>
 <body>
-    <h1 class="welcome-heading">Welcome To The Future</h1>
-    <h2 class="coming-soon">Completed Website Coming Soon</h2>
-
     <div class="bot-container" id="botContainer">
         <img src="robot.png" alt="Chatbot Image">
         <div class="bot-message" id="botMessage"></div>
@@ -109,6 +107,9 @@
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
+
+    <h1 class="welcome-heading">Welcome To The Future</h1>
+    <h2 class="coming-soon">Completed Website Coming Soon</h2>
 
     <script>
         const botMessage = document.getElementById('botMessage');
