@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>transmoms</title>
+    <title>AI Chatbot</title>
     <style>
         body, html {
             height: 100%;
@@ -14,55 +14,8 @@
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        .container {
-            text-align: center;
-            position: relative;
-        }
-        img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        .container p {
-            margin: 0;
-            padding-top: 10px;
-        }
-        .rainbow-text {
-            font-weight: bold;
-            display: inline-block;
-            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: rainbow-animation 2s linear infinite;
-        }
-        @keyframes rainbow-animation {
-            0% {
-                background-position: 0% 50%;
-            }
-            100% {
-                background-position: 100% 50%;
-            }
-        }
-        .heart {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            animation: scaleHeart 5s infinite alternate ease-in-out;
-        }
-        @keyframes scaleHeart {
-            0%, 100% { transform: translate(-50%, -50%) scale(0); }
-            50% { transform: translate(-50%, -50%) scale(1); }
         }
         .bot-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -116,16 +69,6 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="stuart.jpg" alt="A handsome person named Stuart">
-        <p><a href="https://www.ljsilvers.com" class="rainbow-text" target="_blank">MR. HANDSOME</a></p>
-        <div class="heart">
-            <svg viewBox="0 0 24 24" fill="#ff69b4" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-        </div>
-    </div>
-
     <div class="bot-container" id="botContainer">
         <button class="drag-handle" onmousedown="startDrag(event)">Drag</button>
         <img src="robot.png" alt="Chatbot Image" style="width: 200px;">
@@ -138,9 +81,10 @@
 
     <script>
         const botMessage = document.getElementById('botMessage');
+        const userInput = document.getElementById('userInput');
+        const botContainer = document.getElementById('botContainer');
 
         function sendMessage() {
-            const userInput = document.getElementById('userInput');
             const message = userInput.value.trim().toLowerCase();
             if (message === '') return;
 
@@ -174,7 +118,6 @@
             return responses[randomIndex];
         }
 
-        const userInput = document.getElementById('userInput');
         userInput.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 sendMessage();
@@ -209,7 +152,6 @@
             };
         }
 
-        const botContainer = document.getElementById('botContainer');
         botContainer.ondragstart = function() {
             return false;
         };
