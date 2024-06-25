@@ -20,35 +20,33 @@
             display: flex;
             align-items: center;
             flex-direction: column;
-            background: #333;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             padding: 10px;
             margin: 20px;
         }
         .bot-message {
-            background: #444;
+            background: transparent; /* Transparent background */
             color: #fff;
             padding: 10px 20px;
-            width: 200px; /* Fixed width */
-            height: 60px; /* Fixed height */
+            width: 250px; /* Fixed width */
+            height: 80px; /* Fixed height */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             position: absolute;
-            top: -80px; /* Adjust as needed to position near the robot's mouth */
-            left: 0%;
+            top: -100px; /* Adjust as needed to position near the robot's mouth */
+            left: 50%;
             transform: translateX(-50%);
             display: none;
             z-index: 1;
-            border-radius: 20px;
+            border-radius: 50px; /* Oval shape */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional shadow */
         }
         .bot-message::after {
             content: '';
             position: absolute;
             bottom: -10px; /* Position the triangle */
-            left: 85%;
+            left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
