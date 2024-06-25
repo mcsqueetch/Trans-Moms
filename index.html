@@ -9,25 +9,29 @@
             height: 100%;
             margin: 0;
             display: flex;
-            justify-content: center; /* Center content horizontally */
-            align-items: center; /* Center content vertically */
+            justify-content: flex-end; /* Align content to the right */
+            align-items: flex-end; /* Align content to the bottom */
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
-            flex-direction: column; /* Align items in a column */
+            overflow: hidden; /* Hide overflow to prevent horizontal scrolling */
         }
         .text-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin-top: 50px; /* Adjust spacing from the top */
+            align-items: flex-end; /* Align text to the right */
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
         .bot-container {
+            position: relative;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            flex-direction: column;
             padding: 10px;
             margin: 20px;
+            margin-right: 50px; /* Added margin to separate from text */
         }
         .bot-message {
             background: #444; /* Background color */
@@ -41,7 +45,7 @@
             text-align: center;
             position: absolute;
             top: -80px; /* Adjust as needed to position near the robot's mouth */
-            left: 20%;
+            left: 20%; /* Adjust to fine-tune position */
             transform: translateX(-50%);
             display: none;
             z-index: 1;
