@@ -15,9 +15,9 @@
             justify-content: center;
             align-items: center;
         }
-        .text-container {
+        .image-container {
             text-align: center;
-            z-index: 1; /* Ensure text is above bot container */
+            z-index: 1; /* Ensure image is above bot container */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -31,14 +31,14 @@
             flex-direction: column;
             align-items: center;
             padding: 10px;
-            z-index: 2; /* Ensure bot container is above text */
+            z-index: 2; /* Ensure bot container is above image */
         }
         .bot-message {
             background: #444;
             color: #fff;
             padding: 10px 20px;
             width: 200px;
-            height: 60px;
+            height: auto;
             text-align: center;
             border-radius: 30px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -73,33 +73,18 @@
         .bot-container img {
             width: 200px;
         }
-
-        .welcome-heading {
-            font-family: Impact, sans-serif;
-            font-size: 6em;
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .coming-soon {
-            font-family: Impact, sans-serif;
-            font-size: 2em;
-            color: #fff;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
-    <div class="text-container">
-        <h1 class="welcome-heading">Welcome To The Future</h1>
-        <h2 class="coming-soon">Completed Website Coming Soon</h2>
+    <div class="image-container">
+        <img src="Vinny.jpg" alt="Vinny">
     </div>
 
     <div class="bot-container" id="botContainer">
-        <img src="robot.png" alt="Chatbot Image">
-        <div class="bot-message" id="botMessage"></div>
+        <img src="robot.png" alt="Chatbot Image" aria-label="Chatbot Image">
+        <div class="bot-message" id="botMessage" aria-live="polite"></div>
         <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Type a message..." />
+            <input type="text" id="userInput" placeholder="Type a message..." aria-label="Chat input" />
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -130,6 +115,9 @@
         function showBotMessage(message) {
             botMessage.textContent = message;
             botMessage.style.display = 'block'; // Show the message bubble
+            setTimeout(() => {
+                botMessage.style.display = 'none'; // Hide the message after 5 seconds
+            }, 5000);
         }
 
         function getRandomEdgingResponse() {
