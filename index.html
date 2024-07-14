@@ -15,9 +15,9 @@
             justify-content: center;
             align-items: center;
         }
-        .image-container {
+        .button-container {
             text-align: center;
-            z-index: 1; /* Ensure image is above bot container */
+            z-index: 1;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -31,7 +31,7 @@
             flex-direction: column;
             align-items: center;
             padding: 10px;
-            z-index: 2; /* Ensure bot container is above image */
+            z-index: 2;
         }
         .bot-message {
             background: #444;
@@ -44,9 +44,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             display: none;
             position: absolute;
-            bottom: calc(100% + 10px); /* Position above bot-container */
+            bottom: calc(100% + 10px);
             right: 50%;
             transform: translateX(50%);
+            aria-live: polite;
         }
         .chat-input {
             display: flex;
@@ -73,11 +74,28 @@
         .bot-container img {
             width: 200px;
         }
+        .pretty-button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 20px 40px;
+            font-size: 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .pretty-button:hover {
+            background-color: #ff1493;
+        }
     </style>
 </head>
 <body>
-    <div class="image-container">
-        <img src="stuart.jpg" alt="Vinny">
+    <div class="button-container">
+        <a href="https://open.spotify.com/artist/6PLuMSThXLRiRdoro0rSRD?si=Pkj49iadR0ulJZbQHviryg" class="pretty-button">Listen on Spotify</a>
     </div>
 
     <div class="bot-container" id="botContainer">
@@ -93,14 +111,17 @@
         const botMessage = document.getElementById('botMessage');
         const userInput = document.getElementById('userInput');
 
+        // Send message on button click or Enter key press
         function sendMessage() {
             const message = userInput.value.trim().toLowerCase();
             if (message === '') return;
 
             userInput.value = '';
             getBotResponse(message);
+            userInput.focus(); // Keep focus on input field
         }
 
+        // Get response from bot based on user input
         function getBotResponse(message) {
             let response = '';
             if (message.endsWith('?')) {
@@ -112,14 +133,16 @@
             showBotMessage(response);
         }
 
+        // Display bot message
         function showBotMessage(message) {
             botMessage.textContent = message;
-            botMessage.style.display = 'block'; // Show the message bubble
+            botMessage.style.display = 'block';
             setTimeout(() => {
-                botMessage.style.display = 'none'; // Hide the message after 5 seconds
+                botMessage.style.display = 'none';
             }, 5000);
         }
 
+        // Get a random edging response
         function getRandomEdgingResponse() {
             const responses = [
                 "Let me finish edging first.",
@@ -130,12 +153,14 @@
             return responses[randomIndex];
         }
 
+        // Send message on Enter key press
         userInput.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         });
 
+        // Periodic messages from the bot
         const periodicMessages = [
             "Can I help you?",
             "I'm here to assist!",
@@ -144,6 +169,7 @@
             "Are you here to see what the website is all about?"
         ];
 
+        // Show periodic messages at intervals
         function showPeriodicMessage() {
             const randomIndex = Math.floor(Math.random() * periodicMessages.length);
             const message = periodicMessages[randomIndex];
