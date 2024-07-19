@@ -96,13 +96,14 @@
 <body>
     <div class="button-container">
         <a href="https://open.spotify.com/artist/6PLuMSThXLRiRdoro0rSRD?si=Pkj49iadR0ulJZbQHviryg" class="pretty-button">Listen on Spotify</a>
+        <a href="https://www.instagram.com/dailyedge_music/" class="pretty-button">Follow on Instagram</a>
     </div>
 
     <div class="bot-container" id="botContainer">
         <img src="robot.png" alt="Chatbot Image" aria-label="Chatbot Image">
         <div class="bot-message" id="botMessage" aria-live="polite"></div>
         <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Type a message..." aria-label="Chat input" />
+            <input type="text" id="userInput" placeholder="Type a message..." aria-label="Chat input">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -111,17 +112,15 @@
         const botMessage = document.getElementById('botMessage');
         const userInput = document.getElementById('userInput');
 
-        // Send message on button click or Enter key press
         function sendMessage() {
             const message = userInput.value.trim().toLowerCase();
-            if (message === '') return;
+            if (!message) return;
 
             userInput.value = '';
             getBotResponse(message);
-            userInput.focus(); // Keep focus on input field
+            userInput.focus();
         }
 
-        // Get response from bot based on user input
         function getBotResponse(message) {
             let response = '';
             if (message.endsWith('?')) {
@@ -129,11 +128,9 @@
             } else {
                 response = 'I am sorry, I did not understand that.';
             }
-
             showBotMessage(response);
         }
 
-        // Display bot message
         function showBotMessage(message) {
             botMessage.textContent = message;
             botMessage.style.display = 'block';
@@ -142,25 +139,21 @@
             }, 5000);
         }
 
-        // Get a random edging response
         function getRandomEdgingResponse() {
             const responses = [
                 "Let me finish edging first.",
                 "Stop asking me questions, I'm edging.",
                 "Please wait a second while I finish edging."
             ];
-            const randomIndex = Math.floor(Math.random() * responses.length);
-            return responses[randomIndex];
+            return responses[Math.floor(Math.random() * responses.length)];
         }
 
-        // Send message on Enter key press
         userInput.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         });
 
-        // Periodic messages from the bot
         const periodicMessages = [
             "Can I help you?",
             "I'm here to assist!",
@@ -169,14 +162,12 @@
             "Are you here to see what the website is all about?"
         ];
 
-        // Show periodic messages at intervals
         function showPeriodicMessage() {
-            const randomIndex = Math.floor(Math.random() * periodicMessages.length);
-            const message = periodicMessages[randomIndex];
+            const message = periodicMessages[Math.floor(Math.random() * periodicMessages.length)];
             showBotMessage(message);
         }
 
-        setInterval(showPeriodicMessage, 10000); // Show message every 10 seconds
+        setInterval(showPeriodicMessage, 10000);
     </script>
 </body>
 </html>
