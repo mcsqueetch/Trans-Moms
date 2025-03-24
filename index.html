@@ -14,6 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
         .button-container {
             text-align: center;
@@ -91,6 +92,18 @@
         .pretty-button:hover {
             background-color: #ff1493;
         }
+        .logo-button {
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .logo-button img {
+            width: 200px;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+        .logo-button img:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -98,6 +111,10 @@
         <a href="https://open.spotify.com/artist/6PLuMSThXLRiRdoro0rSRD?si=Pkj49iadR0ulJZbQHviryg" class="pretty-button">Listen on Spotify</a>
         <a href="https://www.instagram.com/dailyedge_music/" class="pretty-button">Follow on Instagram</a>
     </div>
+
+    <a href="https://www.instagram.com/stories/highlights/17862569780112616/?hl=en" class="logo-button">
+        <img src="1881_McGrease Family Clothing_LOGO_JB-01.jpg" alt="McGrease Family Clothing Logo">
+    </a>
 
     <div class="bot-container" id="botContainer">
         <img src="robot.png" alt="Chatbot Image" aria-label="Chatbot Image">
