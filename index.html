@@ -3,353 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dailyEDGE | Official Music</title>
+    <title>Comparative Statistics Visualization</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0f0f13;
-            color: #ffffff;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
-        }
-        
-        .album-cover {
+        .stat-card {
             transition: all 0.3s ease;
-            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
-        .album-cover:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.5);
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        
-        .play-button {
-            transition: all 0.3s ease;
-            opacity: 0;
+        .counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        
-        .song-card:hover .play-button {
-            opacity: 1;
-        }
-        
-        .wave-animation {
-            position: relative;
-            height: 50px;
+        .comparison-bar {
+            height: 40px;
+            border-radius: 20px;
             overflow: hidden;
         }
-        
-        .wave {
+        .bar-segment {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
             position: absolute;
-            bottom: 0;
-            left: 0;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
             width: 100%;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="rgba(30, 27, 75, 0.7)"/></svg>') repeat-x;
-            background-size: 1440px 100px;
-            animation: wave 15s linear infinite;
-        }
-        
-        .wave:nth-child(2) {
-            animation: wave 20s linear infinite reverse;
-            opacity: 0.5;
-        }
-        
-        @keyframes wave {
-            0% {
-                background-position-x: 0;
-            }
-            100% {
-                background-position-x: 1440px;
-            }
-        }
-        
-        .spotify-embed {
-            transition: all 0.3s ease;
-        }
-        
-        .spotify-embed:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
-        }
-        
-        /* Fix for Spotify embed focus issue */
-        .spotify-embed iframe {
-            filter: none !important;
-            transform: none !important;
         }
     </style>
 </head>
-<body class="gradient-bg">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-black bg-opacity-80 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <span class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">dailyEDGE</span>
-                    </div>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#home" class="text-white hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#about" class="text-white hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="#contact" class="text-white hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-                        <a href="https://open.spotify.com/artist/6PLuMSThXLRiRdoro0rSRD" target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center">
-                            <i class="fab fa-spotify mr-2"></i> Spotify
-                        </a>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white hover:text-purple-400 focus:outline-none">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">Comparative Statistics Visualization</h1>
         
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-90">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="text-white hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#about" class="text-white hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="#contact" class="text-white hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
-                <a href="https://open.spotify.com/artist/6PLuMSThXLRiRdoro0rSRD" target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-base font-medium flex items-center justify-center">
-                    <i class="fab fa-spotify mr-2"></i> Spotify
-                </a>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section id="home" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <div class="wave-animation">
-                <div class="wave"></div>
-                <div class="wave"></div>
-            </div>
-        </div>
-        <div class="relative z-10">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                        <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">dailyEDGE</span><br>
-                        <span class="text-white">Music That</span><br>
-                        <span class="text-white">Moves You</span>
-                    </h1>
-                    <p class="text-lg text-gray-300 mb-8 max-w-lg">
-                        Experience the unique sound of dailyEDGE. A blend of electronic beats, soulful melodies, and cutting-edge production.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="https://open.spotify.com/artist/6PLuMSThXLRiRdoro0rSRD" target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full font-medium flex items-center">
-                            <i class="fab fa-spotify mr-2 text-xl"></i> Listen on Spotify
-                        </a>
-                        <a href="#about" class="border border-purple-400 text-purple-400 hover:bg-purple-900 hover:bg-opacity-30 px-6 py-3 rounded-full font-medium">
-                            Learn More
-                        </a>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Transgender Moms Card -->
+            <div class="stat-card bg-white rounded-xl p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-transgender text-indigo-600 text-xl"></i>
                     </div>
+                    <h2 class="text-2xl font-semibold text-gray-800">Transgender Parents in the U.S.</h2>
                 </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <div class="relative">
-                        <img src="https://i.scdn.co/image/ab6761610000e5eb3a5d5c0a8d0b2b2f0a9a9c9b" alt="dailyEDGE" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-purple-500 shadow-xl">
-                        <div class="absolute -bottom-5 -right-5 bg-purple-600 rounded-full p-4 shadow-lg">
-                            <i class="fas fa-music text-white text-2xl"></i>
-                        </div>
-                    </div>
+                
+                <div class="mb-6">
+                    <div class="counter mb-2" id="transParentsCounter">0</div>
+                    <p class="text-gray-600">Estimated transgender parents</p>
                 </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Spotify Embed Section -->
-    <section class="py-20 bg-black bg-opacity-30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Latest Music</h2>
-                <div class="w-24 h-1 bg-purple-500 mx-auto mb-6"></div>
-                <p class="text-gray-400 max-w-2xl mx-auto">
-                    Listen to the newest tracks from dailyEDGE directly on Spotify
-                </p>
+                
+                <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <h3 class="font-medium text-gray-700 mb-2">Key Statistics:</h3>
+                    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                        <li>Approximately <span class="font-medium">1.2 million</span> transgender adults in the U.S.</li>
+                        <li>About <span class="font-medium">25-35%</span> of transgender people are parents</li>
+                        <li>Roughly <span class="font-medium">300,000-420,000</span> transgender parents nationwide</li>
+                    </ul>
+                </div>
+                
+                <div class="text-sm text-gray-500 flex items-center">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    <span>Sources: UCLA Williams Institute, National Center for Transgender Equality</span>
+                </div>
             </div>
             
+            <!-- Dog Mortality Card -->
+            <div class="stat-card bg-white rounded-xl p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-red-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-dog text-red-600 text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-semibold text-gray-800">Dog Mortality in the U.S.</h2>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="counter mb-2" id="dogMortalityCounter">0</div>
+                    <p class="text-gray-600">Dogs passing away annually</p>
+                </div>
+                
+                <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <h3 class="font-medium text-gray-700 mb-2">Key Statistics:</h3>
+                    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                        <li>About <span class="font-medium">76 million</span> dogs in the U.S.</li>
+                        <li>Average lifespan: <span class="font-medium">10-13 years</span></li>
+                        <li>Approximately <span class="font-medium">5-8%</span> of dogs pass away each year</li>
+                    </ul>
+                </div>
+                
+                <div class="text-sm text-gray-500 flex items-center">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    <span>Sources: AVMA, ASPCA, pet industry research</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Yearly Trends Graph -->
+        <div class="bg-white rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Yearly Trends (2012-2023)</h2>
+            
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-indigo-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-indigo-800 mb-2">Transgender Parent Trends</h3>
+                    <p class="text-gray-700">The gradual increase reflects both growing visibility of transgender individuals and improved data collection methods. The dip in 2017 may reflect political climate changes affecting self-reporting.</p>
+                </div>
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-red-800 mb-2">Dog Mortality Trends</h3>
+                    <p class="text-gray-700">The steady increase correlates with the growing dog population. The 2020 spike may reflect pandemic-related factors including delayed veterinary care and increased pet ownership from inexperienced owners.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Comparison Visualization -->
+        <div class="bg-white rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Comparative Perspective</h2>
+            
             <div class="max-w-3xl mx-auto">
-                <div class="spotify-embed rounded-xl overflow-hidden">
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/6PLuMSThXLRiRdoro0rSRD?utm_source=generator" width="100%" height="380" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <div class="flex justify-between mb-2">
+                    <span class="text-indigo-600 font-medium">Transgender Parents</span>
+                    <span class="text-red-600 font-medium">Annual Dog Mortality</span>
+                </div>
+                
+                <div class="comparison-bar bg-gray-200 mb-4 flex">
+                    <div class="bar-segment bg-indigo-600" style="width: 8%;">~350,000</div>
+                    <div class="bar-segment bg-red-500" style="width: 92%;">~4 million</div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h3 class="font-medium text-indigo-800 mb-2">Transgender Parents</h3>
+                        <p class="text-gray-700">Estimated 350,000 transgender parents in the U.S., representing about 0.1% of the total population.</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h3 class="font-medium text-red-800 mb-2">Dog Mortality</h3>
+                        <p class="text-gray-700">Approximately 4 million dogs pass away each year in the U.S., representing about 5% of the total dog population.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- About Section -->
-    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">About dailyEDGE</h2>
-                <div class="w-24 h-1 bg-purple-500 mb-6"></div>
-                <p class="text-gray-300 mb-6">
-                    dailyEDGE is an innovative electronic music producer known for blending atmospheric soundscapes with pulsating beats. With a signature style that pushes boundaries while remaining accessible, dailyEDGE creates music that resonates with both casual listeners and audiophiles alike.
-                </p>
-                <p class="text-gray-300 mb-6">
-                    Drawing inspiration from both urban landscapes and natural environments, the music of dailyEDGE transports listeners to otherworldly realms while maintaining an emotional core that keeps them grounded.
-                </p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-white hover:text-purple-400">
-                        <i class="fab fa-facebook-f text-xl"></i>
-                    </a>
-                    <a href="#" class="text-white hover:text-purple-400">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="https://www.instagram.com/dailyedge_music/" target="_blank" class="text-white hover:text-purple-400">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
-                    <a href="#" class="text-white hover:text-purple-400">
-                        <i class="fab fa-soundcloud text-xl"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="md:w-1/2">
-                <div class="bg-gradient-to-br from-purple-900 to-blue-900 rounded-xl p-1">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="dailyEDGE in studio" class="rounded-lg w-full h-auto">
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Newsletter -->
-    <section class="py-20 bg-black bg-opacity-30">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Stay Updated</h2>
-            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
-                Join our newsletter to get the latest news, releases, and exclusive content from dailyEDGE
-            </p>
-            <form class="flex flex-col sm:flex-row max-w-md mx-auto sm:max-w-xl">
-                <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-full sm:rounded-r-none rounded-r-full mb-2 sm:mb-0 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-r-full sm:rounded-l-none rounded-l-full font-medium">
-                    Subscribe
-                </button>
-            </form>
-        </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
-            <div class="w-24 h-1 bg-purple-500 mx-auto mb-6"></div>
-            <p class="text-gray-400 max-w-2xl mx-auto">
-                For booking inquiries, collaborations, or just to say hello
-            </p>
         </div>
         
-        <div class="max-w-4xl mx-auto">
-            <div class="bg-gray-900 bg-opacity-50 rounded-xl p-8">
-                <form>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label for="name" class="block text-gray-300 mb-2">Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-gray-300 mb-2">Email</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white">
-                        </div>
+        <!-- Additional Context -->
+        <div class="bg-blue-50 rounded-xl p-6">
+            <h2 class="text-2xl font-semibold text-blue-800 mb-4">Understanding the Numbers</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium text-blue-700 mb-2 flex items-center">
+                        <i class="fas fa-user-friends mr-2"></i> Transgender Parenting
+                    </h3>
+                    <p class="text-gray-700 mb-4">Many transgender people become parents before transitioning, while others pursue parenting after transition through various means including adoption, fostering, or assisted reproduction.</p>
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                        <p class="text-sm text-gray-600"><span class="font-medium">Note:</span> Exact numbers are challenging to determine due to limited comprehensive surveys specifically tracking transgender parenting status.</p>
                     </div>
-                    <div class="mb-6">
-                        <label for="subject" class="block text-gray-300 mb-2">Subject</label>
-                        <input type="text" id="subject" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white">
-                    </div>
-                    <div class="mb-6">
-                        <label for="message" class="block text-gray-300 mb-2">Message</label>
-                        <textarea id="message" rows="5" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"></textarea>
-                    </div>
-                    <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
-                        Send Message
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="py-12 bg-black bg-opacity-80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">dailyEDGE</span>
                 </div>
-                <div class="flex space-x-6 mb-6 md:mb-0">
-                    <a href="https://open.spotify.com/artist/6PLuMSThXLRiRdoro0rSRD" target="_blank" class="text-gray-400 hover:text-purple-400">
-                        <i class="fab fa-spotify text-xl"></i>
-                    </a>
-                    <a href="https://www.instagram.com/dailyedge_music/" target="_blank" class="text-gray-400 hover:text-purple-400">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-purple-400">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-purple-400">
-                        <i class="fab fa-youtube text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-purple-400">
-                        <i class="fab fa-soundcloud text-xl"></i>
-                    </a>
-                </div>
-                <div class="text-gray-400 text-sm">
-                    &copy; 2023 dailyEDGE. All rights reserved.
+                <div>
+                    <h3 class="text-lg font-medium text-blue-700 mb-2 flex items-center">
+                        <i class="fas fa-paw mr-2"></i> Canine Lifespan
+                    </h3>
+                    <p class="text-gray-700 mb-4">Dog mortality rates vary by breed, size, and care quality. Smaller breeds typically live longer than larger breeds. The annual mortality rate reflects natural lifespan limitations and various health factors.</p>
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                        <p class="text-sm text-gray-600"><span class="font-medium">Note:</span> These estimates include natural deaths and euthanasia for health reasons, but exclude accidental deaths or abandonment.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
-    
+    </div>
+
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    // Close mobile menu if open
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                    
-                    // Scroll to target
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+        // Animated counters
+        function animateCounter(elementId, targetNumber, duration = 2000) {
+            const element = document.getElementById(elementId);
+            const startNumber = 0;
+            const increment = targetNumber / (duration / 16); // 60fps
+            
+            let currentNumber = startNumber;
+            const timer = setInterval(() => {
+                currentNumber += increment;
+                if (currentNumber >= targetNumber) {
+                    clearInterval(timer);
+                    currentNumber = targetNumber;
                 }
-            });
-        });
-        
-        // Newsletter form submission
-        const newsletterForm = document.querySelector('form');
-        if (newsletterForm) {
-            newsletterForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const emailInput = this.querySelector('input[type="email"]');
-                if (emailInput.value) {
-                    alert('Thank you for subscribing! You will receive updates from dailyEDGE.');
-                    emailInput.value = '';
-                }
-            });
+                element.textContent = Math.floor(currentNumber).toLocaleString();
+            }, 16);
         }
+        
+        // Initialize counters when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            animateCounter('transParentsCounter', 350000);
+            animateCounter('dogMortalityCounter', 4000000);
+            
+            // Add interactive tooltips
+            const tooltips = document.querySelectorAll('.info-tooltip');
+            tooltips.forEach(tip => {
+                tip.addEventListener('mouseenter', () => {
+                    tip.querySelector('.tooltip-text').style.opacity = '1';
+                    tip.querySelector('.tooltip-text').style.visibility = 'visible';
+                });
+                tip.addEventListener('mouseleave', () => {
+                    tip.querySelector('.tooltip-text').style.opacity = '0';
+                    tip.querySelector('.tooltip-text').style.visibility = 'hidden';
+                });
+            });
+            
+            // Create trend chart
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            const trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                    datasets: [
+                        {
+                            label: 'Transgender Parents',
+                            data: [280000, 290000, 300000, 310000, 325000, 315000, 330000, 340000, 350000, 355000, 360000, 365000],
+                            borderColor: '#6366f1',
+                            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true,
+                            pointBackgroundColor: '#6366f1',
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Dog Mortality',
+                            data: [3500000, 3550000, 3600000, 3650000, 3700000, 3750000, 3800000, 3850000, 4000000, 3950000, 3900000, 3850000],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true,
+                            pointBackgroundColor: '#ef4444',
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleFont: {
+                                size: 16
+                            },
+                            bodyFont: {
+                                size: 14
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += context.parsed.y.toLocaleString();
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString();
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
